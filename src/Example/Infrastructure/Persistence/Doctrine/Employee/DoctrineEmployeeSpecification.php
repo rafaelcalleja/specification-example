@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Example\Domain\Model\Employee;
+namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
-interface EmployeeRepository
+use Example\Domain\Model\Employee\Employee;
+
+interface DoctrineEmployeeSpecification
 {
     /**
-     * @return []
+     * @return boolean
      */
-    public function query($specification);
+    public function specifies(Employee $an_employee);
 }

@@ -13,6 +13,7 @@ namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
 use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineEmployeeRepository;
+use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineFromEmployeeSpecification;
 use Example\Infrastructure\Persistence\Doctrine\EntityManagerFactory;
 use Example\Tests\TestCase;
 
@@ -41,8 +42,11 @@ class DoctrineEmployeeRepositoryTest extends TestCase
     {
         $expected = $this->repository->find(3);
 
-        $date = new \DateTimeImmutable('-1 year');
-        $actual = $this->repository->fromDate($date);
+        $actual = $this->repository->query(
+            new DoctrineFromEmployeeSpecification(
+                new \DateTimeImmutable('-1 year')
+            )
+        );
 
         $this->assertContainsOnlyInstancesOf('Example\Domain\Model\Employee\Employee', $actual);
         $this->assertContains($expected, $actual);

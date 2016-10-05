@@ -13,10 +13,32 @@ namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Model\Employee\EmployeeRepository;
 
 class DoctrineEmployeeRepository extends EntityRepository implements EmployeeRepository
 {
+
+    /**
+     * @return []
+     */
+    public function query($specification)
+    {
+        return $this->filterPosts(
+            function (Employee $an_employee) use ($specification) {
+                return $specification->specifies($an_employee);
+            }
+        );
+    }
+
+    /**
+     * @return []
+     */
+    private function filterPosts(callable $fn)
+    {
+        return array_values(array_filter($this->findAll(), $fn));
+    }
+
     /**
      * @return []
      */
