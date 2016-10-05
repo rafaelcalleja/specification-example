@@ -21,9 +21,9 @@ class InMemoryFromEmployeeSpecification implements InMemoryEmployeeSpecification
     {
         $this->since = $since;
     }
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function specifies(Employee $an_employee)
     {
