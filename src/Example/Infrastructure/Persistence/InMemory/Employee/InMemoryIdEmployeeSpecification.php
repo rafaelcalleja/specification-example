@@ -15,13 +15,13 @@ use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Specification\AbstractSpecification;
 
 
-class InMemoryFromEmployeeSpecification extends AbstractSpecification implements InMemoryEmployeeSpecification
+class InMemoryIdEmployeeSpecification extends AbstractSpecification implements InMemoryEmployeeSpecification
 {
-    private $since;
+    private $id;
 
-    public function __construct(\DateTimeImmutable $since)
+    public function __construct($id)
     {
-        $this->since = $since;
+        $this->id = $id;
     }
 
     /**
@@ -29,7 +29,7 @@ class InMemoryFromEmployeeSpecification extends AbstractSpecification implements
      */
     public function specifies(Employee $an_employee)
     {
-        return $an_employee->getCreatedAt() < $this->since;
+        return $an_employee->getId() === $this->id;
     }
 
     /**
