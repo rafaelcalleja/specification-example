@@ -1,13 +1,21 @@
 <?php
 
+/*
+ * This file is part of the example specification package.
+ *
+ * (c) Rafael Calleja <rafaelcalleja@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Example\Application\Service;
 
 use Example\Domain\Model\Employee\EmployeeRepository;
 use Example\Domain\Model\Employee\EmployeeSpecificationFactory;
 
-class EarliestEmployeesService
+class EarliestEmployeesService2
 {
-
     /**
      * @var EmployeeRepository
      */
@@ -20,7 +28,6 @@ class EarliestEmployeesService
 
     public function __construct(EmployeeRepository $repository, EmployeeSpecificationFactory $employeeSpecificationFactory)
     {
-
         $this->repository = $repository;
         $this->employeeSpecificationFactory = $employeeSpecificationFactory;
     }
@@ -34,8 +41,8 @@ class EarliestEmployeesService
                 new \DateTimeImmutable('-1 year')
             )
         );
-        
-        /**
+
+        /*
          *  Comentario:
          *
          * Desde el controlador sin usar el abstract factory pattern

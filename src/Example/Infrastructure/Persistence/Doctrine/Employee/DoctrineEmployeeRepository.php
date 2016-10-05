@@ -18,7 +18,6 @@ use Example\Domain\Model\Employee\EmployeeRepository;
 
 class DoctrineEmployeeRepository extends EntityRepository implements EmployeeRepository
 {
-
     /**
      * @return []
      */

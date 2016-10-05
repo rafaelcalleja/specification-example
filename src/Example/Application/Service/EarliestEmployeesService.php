@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the example specification package.
+ *
+ * (c) Rafael Calleja <rafaelcalleja@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Example\Application\Service;
 
 use Example\Domain\Model\Employee\EmployeeRepository;
@@ -7,7 +16,6 @@ use Example\Infrastructure\Persistence\Sql\Employee\SqlFromEmployeeSpecification
 
 class EarliestEmployeesService
 {
-
     /**
      * @var EmployeeRepository
      */
@@ -15,7 +23,6 @@ class EarliestEmployeesService
 
     public function __construct(EmployeeRepository $repository)
     {
-
         $this->repository = $repository;
     }
 
@@ -29,7 +36,7 @@ class EarliestEmployeesService
             )
         );
 
-        /**
+        /*
          *  Comentario:
          *  Usar una implementacion concreta es una mala idea,
          *  Estamos acoplando un high-level application service EarliestEmployeesService
