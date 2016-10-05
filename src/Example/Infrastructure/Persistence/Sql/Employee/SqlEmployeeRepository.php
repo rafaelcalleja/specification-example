@@ -30,14 +30,14 @@ class SqlEmployeeRepository implements EmployeeRepository
     public function query($specification)
     {
         return $this->retrieveAll(
-            'SELECT * FROM posts WHERE ' . $specification->toSqlClauses()
+            'SELECT * FROM posts WHERE '.$specification->toSqlClauses()
         );
     }
 
     /**
      * @return []
      */
-    private function retrieveAll($sql, array $parameters = [])
+    private function retrieveAll($sql, array $parameters = array())
     {
         $st = $this->pdo->prepare($sql);
 

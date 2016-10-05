@@ -16,7 +16,7 @@ use Example\Domain\Model\Employee\Employee;
 interface InMemoryEmployeeSpecification
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function specifies(Employee $an_employee);
 }
