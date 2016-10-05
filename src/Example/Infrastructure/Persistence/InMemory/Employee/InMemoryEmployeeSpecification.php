@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Example\Domain\Model\Employee;
+namespace Example\Infrastructure\Persistence\InMemory\Employee;
 
-interface EmployeeRepository
+use Example\Domain\Model\Employee\Employee;
+
+interface InMemoryEmployeeSpecification
 {
     /**
-     * @return []
+     * @return boolean
      */
-    public function query($specification);
+    public function specifies(Employee $an_employee);
 }

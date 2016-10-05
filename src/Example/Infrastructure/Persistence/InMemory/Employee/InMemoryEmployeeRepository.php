@@ -32,11 +32,11 @@ class InMemoryEmployeeRepository implements EmployeeRepository
     /**
      * @return []
      */
-    public function fromDate(\DateTimeImmutable $date)
+    public function query($specification)
     {
         return $this->filterPosts(
-            function (Employee $an_employee) use ($date) {
-                return $an_employee->getCreatedAt() < $date;
+            function (Employee $an_employee) use ($specification) {
+                return $specification->specifies($an_employee);
             }
         );
     }
@@ -48,4 +48,6 @@ class InMemoryEmployeeRepository implements EmployeeRepository
     {
         return array_values(array_filter($this->employees, $fn));
     }
+
+
 }

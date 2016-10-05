@@ -11,10 +11,7 @@
 
 namespace Example\Domain\Model\Employee;
 
-interface EmployeeRepository
+interface EmployeeSpecification
 {
-    /**
-     * @return []
-     */
-    public function query($specification);
+    public function specifies(Employee $an_employee);
 }
