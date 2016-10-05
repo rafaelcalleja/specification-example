@@ -12,8 +12,6 @@
 namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
-use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineEmployeeSpecification;
-use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineFromEmployeeSpecification;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeRepository;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryFromEmployeeSpecification;
 use Example\Tests\TestCase;

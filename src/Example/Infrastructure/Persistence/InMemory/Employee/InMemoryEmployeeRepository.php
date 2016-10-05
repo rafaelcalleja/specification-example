@@ -48,6 +48,4 @@ class InMemoryEmployeeRepository implements EmployeeRepository
     {
         return array_values(array_filter($this->employees, $fn));
     }
-
-
 }
