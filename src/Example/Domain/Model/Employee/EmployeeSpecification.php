@@ -11,7 +11,9 @@
 
 namespace Example\Domain\Model\Employee;
 
-interface EmployeeSpecification
+use Example\Domain\Specification\Specification;
+
+interface EmployeeSpecification extends Specification
 {
     public function specifies(Employee $an_employee);
 }

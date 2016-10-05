@@ -12,6 +12,8 @@
 namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
+use Example\Domain\Specification\NotSpecification;
+use Example\Domain\Specification\OrSpecification;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeRepository;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryFromEmployeeSpecification;
 use Example\Tests\TestCase;
@@ -41,4 +43,52 @@ class InMemoryFromEmployeeSpecificationTest extends TestCase
         $this->assertFalse($this->specification->specifies($this->employee_2));
         $this->assertTrue($this->specification->specifies($this->employee_3));
     }
+
+
+    /**
+     * @test
+     */
+    public function it_should_satisfied_a_composite_or_specification()
+    {
+        
+        $specification1 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 year'));
+        $specification2 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 day +1 second'));
+
+        $composite = new OrSpecification($specification1, $specification2);
+
+        $this->assertFalse($composite->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($composite->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($composite->isSatisfiedBy($this->employee_3));
+
+
+        $specification3 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('+1 second'));
+        $another = new OrSpecification($specification3, $composite);
+
+
+        $this->assertTrue($another->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($another->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($another->isSatisfiedBy($this->employee_3));
+
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_should_satisfied_a_composite_not_specification()
+    {
+
+        $specification1 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 year'));
+        $specification2 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 day +1 second'));
+
+        $composite = new NotSpecification($specification1);
+        $this->assertFalse($composite->isSatisfiedBy($this->employee_3));
+
+        $another = new NotSpecification($specification2);
+        $this->assertFalse($another->isSatisfiedBy($this->employee_2));
+
+
+    }
+
 }
