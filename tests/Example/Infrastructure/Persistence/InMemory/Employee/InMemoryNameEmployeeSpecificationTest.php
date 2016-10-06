@@ -16,9 +16,10 @@ use Example\Domain\Specification\NotSpecification;
 use Example\Domain\Specification\OrSpecification;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeRepository;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryFromEmployeeSpecification;
+use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryNameEmployeeSpecification;
 use Example\Tests\TestCase;
 
-class InMemoryFromEmployeeSpecificationTest extends TestCase
+class InMemoryNameEmployeeSpecificationTest extends TestCase
 {
     /** @var InMemoryEmployeeRepository */
     private $specification;
@@ -35,13 +36,25 @@ class InMemoryFromEmployeeSpecificationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_retrieve_last_year_employees()
+    public function it_should_satisfie_a_regex_case_insensitive_name()
     {
-        $this->specification = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 year'));
+        $specification = new InMemoryNameEmployeeSpecification('employee_');
 
-        $this->assertFalse($this->specification->specifies($this->employee_1));
-        $this->assertFalse($this->specification->specifies($this->employee_2));
-        $this->assertTrue($this->specification->specifies($this->employee_3));
+        $this->assertTrue($specification->specifies($this->employee_1));
+        $this->assertTrue($specification->specifies($this->employee_2));
+        $this->assertTrue($specification->specifies($this->employee_3));
+
+        $specification = new InMemoryNameEmployeeSpecification('EMPLOYEE_');
+
+        $this->assertTrue($specification->specifies($this->employee_1));
+        $this->assertTrue($specification->specifies($this->employee_2));
+        $this->assertTrue($specification->specifies($this->employee_3));
+
+        $specification = new InMemoryNameEmployeeSpecification('employea_');
+
+        $this->assertFalse($specification->specifies($this->employee_1));
+        $this->assertFalse($specification->specifies($this->employee_2));
+        $this->assertFalse($specification->specifies($this->employee_3));
     }
 
 
