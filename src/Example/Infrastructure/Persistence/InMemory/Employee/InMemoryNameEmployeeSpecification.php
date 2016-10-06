@@ -14,7 +14,6 @@ namespace Example\Infrastructure\Persistence\InMemory\Employee;
 use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Specification\AbstractSpecification;
 
-
 class InMemoryNameEmployeeSpecification extends AbstractSpecification implements InMemoryEmployeeSpecification
 {
     private $name;
@@ -29,7 +28,7 @@ class InMemoryNameEmployeeSpecification extends AbstractSpecification implements
      */
     public function specifies(Employee $an_employee)
     {
-        return (bool) preg_match("/{$this->name}/i", $an_employee->getName()) ;
+        return (bool) preg_match("/{$this->name}/i", $an_employee->getName());
     }
 
     /**

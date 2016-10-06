@@ -39,7 +39,6 @@ class InMemoryEmployeeChainSpecificationTest extends TestCase
      */
     public function it_should_satisfied_a_composite_or_specification()
     {
-
         $specification1 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 year'));
         $specification2 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 day +1 second'));
 
@@ -62,7 +61,6 @@ class InMemoryEmployeeChainSpecificationTest extends TestCase
      */
     public function it_should_satisfied_a_not_specification()
     {
-
         $specification1 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 year'));
         $specification2 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 day +1 second'));
 
@@ -78,7 +76,6 @@ class InMemoryEmployeeChainSpecificationTest extends TestCase
      */
     public function it_should_satisfied_composite_and_specification()
     {
-
         $specification1 = new InMemoryNameEmployeeSpecification('_2');
         $specification2 = new InMemoryFromEmployeeSpecification(new \DateTimeImmutable('-1 day +1 second'));
 

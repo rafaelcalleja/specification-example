@@ -12,10 +12,7 @@
 namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
-use Example\Domain\Specification\NotSpecification;
-use Example\Domain\Specification\OrSpecification;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeRepository;
-use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryFromEmployeeSpecification;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryNameEmployeeSpecification;
 use Example\Tests\TestCase;
 
@@ -56,8 +53,4 @@ class InMemoryNameEmployeeSpecificationTest extends TestCase
         $this->assertFalse($specification->specifies($this->employee_2));
         $this->assertFalse($specification->specifies($this->employee_3));
     }
-
-
-
-
 }
