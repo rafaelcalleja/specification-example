@@ -45,7 +45,6 @@ class InMemoryEmployeeSpecificationFactoryTest extends TestCase
         $this->assertFalse($specification->isSatisfiedBy($this->employee_2));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
 
-
         $specification = $this->factory->createCompositeFromAndNameEmployees(new \DateTimeImmutable('-1 year'), 'employee_1');
 
         $this->assertFalse($specification->isSatisfiedBy($this->employee_1));
@@ -58,25 +57,16 @@ class InMemoryEmployeeSpecificationFactoryTest extends TestCase
         $this->assertFalse($specification->isSatisfiedBy($this->employee_2));
         $this->assertFalse($specification->isSatisfiedBy($this->employee_3));
 
-
         $specification = $this->factory->createCompositeFromAndNameEmployees(new \DateTimeImmutable(), 'employee_');
 
         $this->assertFalse($specification->isSatisfiedBy($this->employee_1));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
 
-
         $specification = $this->factory->createCompositeFromAndNameEmployees(new \DateTimeImmutable('+1 seconds'), 'employee_');
 
         $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
-
-
-
     }
-
-
-
-
 }

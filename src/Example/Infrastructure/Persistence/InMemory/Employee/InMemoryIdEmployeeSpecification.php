@@ -14,7 +14,6 @@ namespace Example\Infrastructure\Persistence\InMemory\Employee;
 use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Specification\AbstractSpecification;
 
-
 class InMemoryIdEmployeeSpecification extends AbstractSpecification implements InMemoryEmployeeSpecification
 {
     private $id;
