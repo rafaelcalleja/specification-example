@@ -12,8 +12,9 @@
 namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
+use Example\Infrastructure\Persistence\Doctrine\SpecificableInterface;
 
-interface DoctrineEmployeeSpecification
+interface DoctrineEmployeeSpecification extends SpecificableInterface
 {
     /**
      * @return bool

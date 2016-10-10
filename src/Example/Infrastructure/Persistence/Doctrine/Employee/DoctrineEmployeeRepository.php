@@ -13,8 +13,10 @@ namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Model\Employee\EmployeeRepository;
+use Example\Infrastructure\Persistence\Doctrine\SpecificableInterface;
 
 class DoctrineEmployeeRepository extends EntityRepository implements EmployeeRepository
 {
@@ -23,19 +25,27 @@ class DoctrineEmployeeRepository extends EntityRepository implements EmployeeRep
      */
     public function query($specification)
     {
-        return $this->filterPosts(
+        return $this->filterEmployees(
             function (Employee $an_employee) use ($specification) {
                 return $specification->specifies($an_employee);
-            }
-        );
+            }, $specification);
     }
 
     /**
+     * @param SpecificableInterface $specification
+     *
      * @return []
      */
-    private function filterPosts(callable $fn)
+    private function filterEmployees(callable $fn, $specification)
     {
-        return array_values(array_filter($this->findAll(), $fn));
+
+        /** @var $qb QueryBuilder */
+        $qb = $this->createQueryBuilder('e');
+        $qb = $specification->modifyQuery($qb);
+
+        $query = $qb->getQuery();
+
+        return array_values(array_filter($query->getResult(), $fn));
     }
 
     /**
