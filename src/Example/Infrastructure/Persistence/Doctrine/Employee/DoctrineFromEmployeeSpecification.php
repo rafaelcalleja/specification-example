@@ -11,9 +11,11 @@
 
 namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Example\Domain\Model\Employee\Employee;
+use Example\Domain\Specification\AbstractSpecification;
 
-class DoctrineFromEmployeeSpecification implements DoctrineEmployeeSpecification
+class DoctrineFromEmployeeSpecification extends AbstractSpecification implements DoctrineEmployeeSpecification
 {
     private $since;
 
@@ -28,5 +30,31 @@ class DoctrineFromEmployeeSpecification implements DoctrineEmployeeSpecification
     public function specifies(Employee $an_employee)
     {
         return $an_employee->getCreatedAt() < $this->since;
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     *
+     * @return QueryBuilder
+     */
+    public function modifyQuery($queryBuilder)
+    {
+        $queryBuilder->andWhere('e.created_at NOT IN (:dates)');
+        $queryBuilder->setParameter('dates', array(
+            '1',
+            '2',
+        ));
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param mixed $object
+     *
+     * @return bool
+     */
+    public function isSatisfiedBy($object)
+    {
+        return $this->specifies($object);
     }
 }
