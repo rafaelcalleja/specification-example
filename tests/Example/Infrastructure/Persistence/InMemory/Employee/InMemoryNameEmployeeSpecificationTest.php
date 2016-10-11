@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
+namespace tests\Example\Infrastructure\Persistence\InMemory\Employee;
 
 use Example\Domain\Model\Employee\Employee;
 use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeRepository;

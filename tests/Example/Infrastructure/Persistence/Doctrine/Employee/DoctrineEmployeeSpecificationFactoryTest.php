@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Example\Infrastructure\Persistence\InMemory\Employee;
+namespace tests\Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Model\Employee\EmployeeSpecificationFactory;
 use Example\Domain\Specification\AndSpecification;
-use Example\Infrastructure\Persistence\InMemory\Employee\InMemoryEmployeeSpecificationFactory;
+use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineEmployeeSpecificationFactory;
 use Example\Tests\TestCase;
 
-class InMemoryEmployeeSpecificationFactoryTest extends TestCase
+class DoctrineEmployeeSpecificationFactoryTest extends TestCase
 {
     /** @var EmployeeSpecificationFactory */
     private $factory;
@@ -26,7 +26,7 @@ class InMemoryEmployeeSpecificationFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->factory = new InMemoryEmployeeSpecificationFactory();
+        $this->factory = new  DoctrineEmployeeSpecificationFactory();
 
         $this->employee_1  = new Employee(1, 'employee_1', new \DateTime());
         $this->employee_2  = new Employee(2, 'employee_2', new \DateTime('-1 day'));

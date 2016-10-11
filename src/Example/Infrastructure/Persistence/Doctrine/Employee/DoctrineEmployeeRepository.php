@@ -27,7 +27,7 @@ class DoctrineEmployeeRepository extends EntityRepository implements EmployeeRep
     {
         return $this->filterEmployees(
             function (Employee $an_employee) use ($specification) {
-                return $specification->specifies($an_employee);
+                return $specification->isSatisfiedBy($an_employee);
             }, $specification);
     }
 
