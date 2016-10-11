@@ -11,13 +11,13 @@
 
 namespace Example\Domain\Model\Employee;
 
-use Example\Domain\Specification\AndSpecification;
-use Example\Domain\Specification\Specification;
+use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineFromEmployeeSpecification;
+use Example\Infrastructure\Persistence\Doctrine\Specification\AndSpecification;
 
 interface EmployeeSpecificationFactory
 {
     /**
-     * @return Specification
+     * @return DoctrineFromEmployeeSpecification
      */
     public function createEarliestEmployees(\DateTimeImmutable $from);
 

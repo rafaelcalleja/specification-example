@@ -12,25 +12,12 @@
 namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Example\Domain\Model\Employee\Employee;
+use Example\Domain\Model\Employee\Specification\FromEmployeeSpecification;
 use Example\Infrastructure\Persistence\Doctrine\Specification\AbstractSpecification;
 
-class DoctrineFromEmployeeSpecification extends AbstractSpecification implements DoctrineEmployeeSpecification
+class DoctrineFromEmployeeSpecification extends FromEmployeeSpecification implements DoctrineEmployeeSpecification
 {
-    private $since;
-
-    public function __construct(\DateTimeImmutable $since)
-    {
-        $this->since = $since;
-    }
-
-    /**
-     * @return bool
-     */
-    public function specifies(Employee $an_employee)
-    {
-        return $an_employee->getCreatedAt() < $this->since;
-    }
+    use AbstractSpecification;
 
     /**
      * @param QueryBuilder $queryBuilder
@@ -39,19 +26,10 @@ class DoctrineFromEmployeeSpecification extends AbstractSpecification implements
      */
     public function modifyQuery($queryBuilder)
     {
-        $queryBuilder->andWhere('e.created_at < :date');
+        $expression = $queryBuilder->expr()->lt('e.created_at', ':date');
+        $queryBuilder->where($expression);
         $queryBuilder->setParameter('date', $this->since);
 
         return $queryBuilder;
-    }
-
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function isSatisfiedBy($object)
-    {
-        return $this->specifies($object);
     }
 }

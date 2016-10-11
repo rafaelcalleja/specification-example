@@ -11,8 +11,10 @@
 
 namespace Example\Domain\Specification;
 
-class AndSpecification extends AbstractSpecification
+class AndSpecification implements Specification
 {
+    use AbstractSpecification;
+
     /**
      * @var Specification
      */

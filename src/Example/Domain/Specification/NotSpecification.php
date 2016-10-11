@@ -11,12 +11,15 @@
 
 namespace Example\Domain\Specification;
 
-class NotSpecification extends AbstractSpecification
+class NotSpecification implements Specification
 {
+    use AbstractSpecification;
+
     /**
      * @var Specification
      */
-    private $specification;
+    protected $specification;
+
     /**
      * @param Specification $specification
      */
@@ -24,6 +27,7 @@ class NotSpecification extends AbstractSpecification
     {
         $this->specification = $specification;
     }
+
     /**
      * @param mixed $object
      *

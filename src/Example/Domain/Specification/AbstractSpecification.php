@@ -11,7 +11,7 @@
 
 namespace Example\Domain\Specification;
 
-abstract class AbstractSpecification implements Specification
+trait AbstractSpecification
 {
     /**
      * @param Specification $specification

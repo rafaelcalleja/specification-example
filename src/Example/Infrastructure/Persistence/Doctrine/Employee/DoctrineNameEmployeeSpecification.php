@@ -11,39 +11,17 @@
 
 namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
-use Example\Domain\Model\Employee\Employee;
+use Example\Domain\Model\Employee\Specification\NameEmployeeSpecification;
 use Example\Infrastructure\Persistence\Doctrine\Specification\AbstractSpecification;
 
-class DoctrineNameEmployeeSpecification extends AbstractSpecification implements DoctrineEmployeeSpecification
+class DoctrineNameEmployeeSpecification extends NameEmployeeSpecification implements DoctrineEmployeeSpecification
 {
-    private $name;
-
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return bool
-     */
-    public function specifies(Employee $an_employee)
-    {
-        return (bool) preg_match("/{$this->name}/i", $an_employee->getName());
-    }
-
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function isSatisfiedBy($object)
-    {
-        return $this->specifies($object);
-    }
+    use AbstractSpecification;
 
     public function modifyQuery($queryBuilder)
     {
-        $queryBuilder->andWhere('e.name like :name');
+        $expression = $queryBuilder->expr()->like('e.name', ':name');
+        $queryBuilder->where($expression);
         $queryBuilder->setParameter('name', sprintf('%%%s%%', $this->name));
 
         return $queryBuilder;

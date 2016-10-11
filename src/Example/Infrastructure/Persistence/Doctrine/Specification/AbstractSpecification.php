@@ -14,7 +14,7 @@ namespace Example\Infrastructure\Persistence\Doctrine\Specification;
 use Example\Domain\Specification\Specification;
 use Example\Infrastructure\Persistence\Doctrine\SpecificableInterface;
 
-abstract class AbstractSpecification implements SpecificableInterface
+trait AbstractSpecification
 {
     /**
      * @param SpecificableInterface $specification
@@ -37,7 +37,7 @@ abstract class AbstractSpecification implements SpecificableInterface
     }
 
     /**
-     * @return SpecificableInterface
+     * @return NotSpecification
      */
     public function not()
     {
