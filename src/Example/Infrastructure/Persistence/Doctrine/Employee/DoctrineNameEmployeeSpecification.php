@@ -11,7 +11,6 @@
 
 namespace Example\Infrastructure\Persistence\Doctrine\Employee;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Example\Domain\Model\Employee\Employee;
 use Example\Infrastructure\Persistence\Doctrine\Specification\AbstractSpecification;
 
@@ -45,7 +44,7 @@ class DoctrineNameEmployeeSpecification extends AbstractSpecification implements
     public function modifyQuery($queryBuilder)
     {
         $queryBuilder->andWhere('e.name like :name');
-        $queryBuilder->setParameter('name', sprintf("%%%s%%", $this->name));
+        $queryBuilder->setParameter('name', sprintf('%%%s%%', $this->name));
 
         return $queryBuilder;
     }

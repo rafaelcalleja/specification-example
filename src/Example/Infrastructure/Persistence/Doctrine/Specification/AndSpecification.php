@@ -25,8 +25,7 @@ class AndSpecification extends \Example\Domain\Specification\AndSpecification im
     {
         $queryBuilder = $this->one->modifyQuery($queryBuilder);
         $queryBuilder = $this->other->modifyQuery($queryBuilder);
-        
+
         return $queryBuilder;
     }
-
 }

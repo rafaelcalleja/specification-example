@@ -21,8 +21,7 @@ class EntityManagerFactory
      */
     public function build($conn)
     {
-        if ( false === \Doctrine\DBAL\Types\Type::hasType('custom_datetime') )
-        {
+        if (false === \Doctrine\DBAL\Types\Type::hasType('custom_datetime')) {
             \Doctrine\DBAL\Types\Type::addType('custom_datetime', 'Example\Domain\Model\DateTime\DateTimeType');
         }
 

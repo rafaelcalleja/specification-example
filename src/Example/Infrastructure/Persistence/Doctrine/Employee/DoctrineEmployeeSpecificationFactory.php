@@ -15,7 +15,6 @@ use Example\Domain\Model\Employee\EmployeeSpecificationFactory;
 use Example\Infrastructure\Persistence\Doctrine\SpecificableInterface;
 use Example\Infrastructure\Persistence\Doctrine\Specification\AndSpecification;
 
-
 class DoctrineEmployeeSpecificationFactory implements EmployeeSpecificationFactory
 {
     /**

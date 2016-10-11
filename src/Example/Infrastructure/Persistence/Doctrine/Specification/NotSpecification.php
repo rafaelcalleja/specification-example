@@ -11,12 +11,10 @@
 
 namespace Example\Infrastructure\Persistence\Doctrine\Specification;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Example\Infrastructure\Persistence\Doctrine\SpecificableInterface;
 
 class NotSpecification extends \Example\Domain\Specification\NotSpecification implements SpecificableInterface
 {
-
     public function modifyQuery($queryBuilder)
     {
         // TODO: Implement modifyQuery() method.
