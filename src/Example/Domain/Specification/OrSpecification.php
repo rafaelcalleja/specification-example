@@ -11,16 +11,18 @@
 
 namespace Example\Domain\Specification;
 
-class OrSpecification extends AbstractSpecification
+class OrSpecification implements Specification
 {
+    use AbstractSpecification;
+
     /**
      * @var Specification
      */
-    private $one;
+    protected $one;
     /**
      * @var Specification
      */
-    private $other;
+    protected $other;
     /**
      * @param Specification $one
      * @param Specification $other

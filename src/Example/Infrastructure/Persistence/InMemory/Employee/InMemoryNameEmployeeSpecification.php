@@ -11,33 +11,10 @@
 
 namespace Example\Infrastructure\Persistence\InMemory\Employee;
 
-use Example\Domain\Model\Employee\Employee;
+use Example\Domain\Model\Employee\Specification\NameEmployeeSpecification;
 use Example\Domain\Specification\AbstractSpecification;
 
-class InMemoryNameEmployeeSpecification extends AbstractSpecification implements InMemoryEmployeeSpecification
+class InMemoryNameEmployeeSpecification extends NameEmployeeSpecification implements InMemoryEmployeeSpecification
 {
-    private $name;
-
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return bool
-     */
-    public function specifies(Employee $an_employee)
-    {
-        return (bool) preg_match("/{$this->name}/i", $an_employee->getName());
-    }
-
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function isSatisfiedBy($object)
-    {
-        return $this->specifies($object);
-    }
+    use AbstractSpecification;
 }

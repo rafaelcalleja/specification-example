@@ -15,6 +15,8 @@ use Example\Domain\Model\Employee\Employee;
 use Example\Domain\Model\Employee\EmployeeSpecificationFactory;
 use Example\Domain\Specification\AndSpecification;
 use Example\Infrastructure\Persistence\Doctrine\Employee\DoctrineEmployeeSpecificationFactory;
+use Example\Infrastructure\Persistence\Doctrine\Specification\NotSpecification;
+use Example\Infrastructure\Persistence\Doctrine\Specification\OrSpecification;
 use Example\Tests\TestCase;
 
 class DoctrineEmployeeSpecificationFactoryTest extends TestCase
@@ -36,7 +38,7 @@ class DoctrineEmployeeSpecificationFactoryTest extends TestCase
     /**
      * @test
      */
-    public function it_should_satisfie_a_and_composite_name()
+    public function it_should_satisfie_an_and_composite_name()
     {
         /** @var $specification AndSpecification */
         $specification = $this->factory->createCompositeFromAndNameEmployees(new \DateTimeImmutable('-1 year'), 'employee_');
@@ -68,5 +70,65 @@ class DoctrineEmployeeSpecificationFactoryTest extends TestCase
         $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
         $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
+
+        $specification = $this->factory->createCompositeFromAndNameEmployees(new \DateTimeImmutable('-1 year'), 'employee_2');
+
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_1));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_2));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_3));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_satisfie_an_or_composite_name()
+    {
+        /** @var $specification OrSpecification */
+        $specification = $this->factory->createCompositeFromOrNameEmployees(new \DateTimeImmutable('-1 year'), 'employee_1');
+
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
+
+        /** @var $specification OrSpecification */
+        $specification = $this->factory->createCompositeFromOrNameEmployees(new \DateTimeImmutable('-1 year'), 'employee_2');
+
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_satisfie_a_not_composite_name()
+    {
+        /** @var $specification NotSpecification */
+        $specification = $this->factory->createCompositeFromAndNameNotEmployees(new \DateTimeImmutable('-1 year'), 'employee_1');
+
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
+
+        /** @var $specification NotSpecification */
+        $specification = $this->factory->createCompositeFromAndNameNotEmployees(new \DateTimeImmutable('-1 year'), 'employee_2');
+
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_3));
+
+        /** @var $specification NotSpecification */
+        $specification = $this->factory->createCompositeFromAndNameNotEmployees(new \DateTimeImmutable('+1 seconds'), 'employee_');
+
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_1));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_2));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_3));
+
+        /** @var $specification NotSpecification */
+        $specification = $this->factory->createCompositeFromAndNameNotEmployees(new \DateTimeImmutable('-1 year'), 'employee_');
+
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_1));
+        $this->assertTrue($specification->isSatisfiedBy($this->employee_2));
+        $this->assertFalse($specification->isSatisfiedBy($this->employee_3));
     }
 }

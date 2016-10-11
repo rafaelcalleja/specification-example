@@ -34,6 +34,19 @@ class DoctrineEmployeeRepositoryTest extends TestCase
         );
 
         $this->repository = $entityManager->getRepository(Employee::class);
+
+        $conn = $entityManager->getConnection();
+        $qb = $conn->createQueryBuilder();
+        $qb->delete('employees');
+        $qb->execute();
+
+        $this->employee_1  = new Employee(1, 'employee_1', new \DateTime());
+        $this->employee_2  = new Employee(2, 'employee_2', new \DateTime('-1 day'));
+        $this->employee_3  = new Employee(3, 'employee_3', new \DateTime('-2 year'));
+
+        $this->repository->add($this->employee_1);
+        $this->repository->add($this->employee_2);
+        $this->repository->add($this->employee_3);
     }
 
     /**
@@ -57,7 +70,7 @@ class DoctrineEmployeeRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_should_create_composite_sql_builder_using_factory()
+    public function it_should_create_composite_and_sql_builder_using_factory()
     {
         $factory = new DoctrineEmployeeSpecificationFactory();
         $expected = $this->repository->find(3);
@@ -72,6 +85,50 @@ class DoctrineEmployeeRepositoryTest extends TestCase
         $this->assertContainsOnlyInstancesOf('Example\Domain\Model\Employee\Employee', $actual);
         $this->assertContains($expected, $actual);
         $this->assertCount(1, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_create_composite_or_sql_builder_using_factory()
+    {
+        $factory = new DoctrineEmployeeSpecificationFactory();
+        $expected = $this->repository->find(3);
+        $expected_2 = $this->repository->find(1);
+
+        $actual = $this->repository->query(
+            $factory->createCompositeFromOrNameEmployees(
+                new \DateTimeImmutable('-1 year'),
+                'employee_1'
+            )
+        );
+
+        $this->assertContainsOnlyInstancesOf('Example\Domain\Model\Employee\Employee', $actual);
+        $this->assertContains($expected, $actual);
+        $this->assertContains($expected_2, $actual);
+        $this->assertCount(2, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_create_composite_not_sql_builder_using_factory()
+    {
+        $factory = new DoctrineEmployeeSpecificationFactory();
+        $expected = $this->repository->find(2);
+        $expected_2 = $this->repository->find(1);
+
+        $actual = $this->repository->query(
+            $factory->createCompositeFromAndNameNotEmployees(
+                new \DateTimeImmutable('-1 year'),
+                'employee_'
+            )
+        );
+
+        $this->assertCount(2, $actual);
+        $this->assertContains($expected, $actual);
+        $this->assertContains($expected_2, $actual);
+        $this->assertContainsOnlyInstancesOf('Example\Domain\Model\Employee\Employee', $actual);
     }
 
     public function tearDown()
