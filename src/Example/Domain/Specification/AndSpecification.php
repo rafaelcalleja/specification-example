@@ -16,11 +16,11 @@ class AndSpecification extends AbstractSpecification
     /**
      * @var Specification
      */
-    private $one;
+    protected $one;
     /**
      * @var Specification
      */
-    private $other;
+    protected $other;
     /**
      * @param Specification $one
      * @param Specification $other

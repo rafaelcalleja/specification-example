@@ -15,13 +15,13 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Example\Domain\Model\Employee\Employee;
 use Example\Infrastructure\Persistence\Doctrine\Specification\AbstractSpecification;
 
-class DoctrineFromEmployeeSpecification extends AbstractSpecification implements DoctrineEmployeeSpecification
+class DoctrineNameEmployeeSpecification extends AbstractSpecification implements DoctrineEmployeeSpecification
 {
-    private $since;
+    private $name;
 
-    public function __construct(\DateTimeImmutable $since)
+    public function __construct($name)
     {
-        $this->since = $since;
+        $this->name = $name;
     }
 
     /**
@@ -29,20 +29,7 @@ class DoctrineFromEmployeeSpecification extends AbstractSpecification implements
      */
     public function specifies(Employee $an_employee)
     {
-        return $an_employee->getCreatedAt() < $this->since;
-    }
-
-    /**
-     * @param QueryBuilder $queryBuilder
-     *
-     * @return QueryBuilder
-     */
-    public function modifyQuery($queryBuilder)
-    {
-        $queryBuilder->andWhere('e.created_at < :date');
-        $queryBuilder->setParameter('date', $this->since);
-
-        return $queryBuilder;
+        return (bool) preg_match("/{$this->name}/i", $an_employee->getName());
     }
 
     /**
@@ -53,5 +40,13 @@ class DoctrineFromEmployeeSpecification extends AbstractSpecification implements
     public function isSatisfiedBy($object)
     {
         return $this->specifies($object);
+    }
+
+    public function modifyQuery($queryBuilder)
+    {
+        $queryBuilder->andWhere('e.name like :name');
+        $queryBuilder->setParameter('name', sprintf("%%%s%%", $this->name));
+
+        return $queryBuilder;
     }
 }
